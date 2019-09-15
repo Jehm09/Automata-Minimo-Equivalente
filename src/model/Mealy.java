@@ -32,8 +32,8 @@ public class Mealy extends Automata {
 	@Override
 	public void dfs() {
 		HashMap<String, Boolean> visitados = new HashMap<>();
-		for (int i = 0; i < Num_estados; i++) {
-			visitados.put(estados[i], false);
+		for (int i = 0; i < Num_states; i++) {
+			visitados.put(states[i], false);
 		}
 
 		visitados.put(start, true);
@@ -57,11 +57,16 @@ public class Mealy extends Automata {
 			
 		}
 		
-		for (int i = 0; i < Num_estados; i++) {
-			if(!visitados.get(estados[i])) {
-				adjw.remove(estados[i]);
+		for (int i = 0; i < Num_states; i++) {
+			if(!visitados.get(states[i])) {
+				adjw.remove(states[i]);
 			}
 		}
+	}
+
+	@Override
+	public void generateEquivalentMinimum() {
+		
 	}
 
 }

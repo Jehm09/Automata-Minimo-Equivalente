@@ -4,19 +4,19 @@ import java.util.Vector;
 
 public abstract class Automata {
 	
-	protected int Num_estados;
+	protected int Num_states;
 	protected String start;//Representa el estado inicial
 	protected Vector<String> S;//Alfabeto
 	protected Vector<String> R;//Alfabeto de salida
-	protected String estados[];
+	protected String states[];
 	
 
-	public Automata(Vector<String> S, Vector<String> R, int Num_estados, String start) {
+	public Automata(Vector<String> S, Vector<String> R, int Num_states, String start) {
 		this.S = S;
 		this.R = R;
-		this.Num_estados = Num_estados;
+		this.Num_states = Num_states;
 		this.start = start;
-		estados = new String[Num_estados];
+		states = new String[Num_states];
 	}
 	
 	public String getStartString() {
@@ -28,11 +28,11 @@ public abstract class Automata {
 	}
 	
 	public int getEstados() {
-		return Num_estados;
+		return Num_states;
 	}
 
-	public void setEstados(int Num_estados) {
-		this.Num_estados = Num_estados;
+	public void setEstados(int Num_states) {
+		this.Num_states = Num_states;
 	}
 
 	public Vector<String> getS() {
@@ -64,5 +64,10 @@ public abstract class Automata {
 	 * Metodo que se encarga de recorrer el grafo y eliminar los estados que no son alcanzables
 	 */
 	public abstract void dfs();
+	
+	/**
+	 * Metodo que se encarga de generar el automata minimo equivalente
+	 */
+	public abstract void generateEquivalentMinimum();
 
 }
