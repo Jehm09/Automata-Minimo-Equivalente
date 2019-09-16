@@ -80,6 +80,18 @@ public abstract class Automata {
 	 */
 	public abstract void generateEquivalentMinimum();
 	
+	/**
+	 * Crea la primera particion
+	 */
 	public abstract void createFirstP();
+	
+	/**
+	 * metodo que retorna un arreglo con los nombres de las columnas a mostrar
+	 */
+	public abstract String[] column();
 
+	/**
+	 * metodo que retorna una matriz con la informacion a mostrar
+	 */
+	public abstract String[][] data();
 }

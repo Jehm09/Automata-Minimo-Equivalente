@@ -269,11 +269,13 @@ public class MainWindow implements ActionListener {
 			logicAutomata.setStates(sta);
 			logicAutomata.generateEquivalentMinimum();
 			
-			tablaResul = new JTable();
+			tablaResul = new JTable(logicAutomata.data(), logicAutomata.column());
 			frmAutomataEquivalente.getContentPane().add(tablaResul, BorderLayout.SOUTH);
-			JScrollPane js = new JScrollPane(table);
+			JScrollPane js = new JScrollPane(tablaResul);
 			js.setVisible(true);
 			frmAutomataEquivalente.getContentPane().add(js);
+			
+			
 		}
 		
 		frmAutomataEquivalente.pack();
