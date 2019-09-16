@@ -1,34 +1,11 @@
 package gui;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.table.TableModel;
-
 import model.*;
-
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.Vector;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainWindow implements ActionListener {
 	
@@ -49,6 +26,7 @@ public class MainWindow implements ActionListener {
 	private ButtonGroup grupo;
 	private JButton CalcularB;
 	private Automata logicAutomata;
+	private JTable tablaResul;
 
 	/**
 	 * Launch the application.
@@ -128,7 +106,7 @@ public class MainWindow implements ActionListener {
 		gbc_S.gridy = 1;
 		panel.add(S, gbc_S);
 
-		Ctable = new JButton("Mostrar Tabla");
+		Ctable = new JButton("Ingresar valores a la Tabla");
 		Ctable.addActionListener(this);
 		Ctable.setActionCommand(GENERAR);
 
@@ -177,11 +155,10 @@ public class MainWindow implements ActionListener {
 		gbc_States.gridx = 1;
 		gbc_States.gridy = 5;
 		panel.add(States, gbc_States);
+		
 	}
 
 	public int validateButton() {
-		int rst = -1;
-
 		if (Moore.isSelected()) {
 			return 0; // moore
 		} else {
@@ -200,7 +177,7 @@ public class MainWindow implements ActionListener {
 
 			String delims = "\\W+"; // split any non word
 			String[] tokensS = S.getText().split(delims);
-			String[] tokensR = R.getText().split(delims);
+//			String[] tokensR = R.getText().split(delims);
 			int states = 0;
 			try {
 				states = Integer.parseInt(States.getText());
@@ -208,15 +185,19 @@ public class MainWindow implements ActionListener {
 				states = -1;
 				e2.printStackTrace();
 			}
-
+			
+			if(table != null) {// mirar luego
+//				table.removeAll();
+//				DefaultTableModel dm = (DefaultTableModel)table.getModel();
+//				dm.getDataVector().removeAllElements();
+//				dm.fireTableDataChanged(); // notifies the JTable that the model has changed
+			}
 			if (validateButton() == 0) {
 				table = new JTable(states + 1, tokensS.length + 2);
 				frmAutomataEquivalente.getContentPane().add(table, BorderLayout.CENTER);
-//				JScrollPane scrollPane = new JScrollPane(table);
-//				table.setFillsViewportHeight(true);
-//				frmAutomataEquivalente.getContentPane().setLayout(new BorderLayout());
-//				frmAutomataEquivalente.getContentPane().add(scrollPane, BorderLayout.CENTER);
-//				frmAutomataEquivalente.setPreferredSize(new Dimension(500, 200));
+				JScrollPane js = new JScrollPane(table);
+				js.setVisible(true);
+				frmAutomataEquivalente.getContentPane().add(js);
 				
 				//Modifico nombres de las columnas
 				int val = 0;
@@ -233,11 +214,9 @@ public class MainWindow implements ActionListener {
 			} else {
 				table = new JTable(states + 1, tokensS.length + 1);
 				frmAutomataEquivalente.getContentPane().add(table, BorderLayout.CENTER);
-//				JScrollPane scrollPane = new JScrollPane(table);
-//				table.setFillsViewportHeight(true);
-//				frmAutomataEquivalente.getContentPane().setLayout(new BorderLayout());
-//				frmAutomataEquivalente.getContentPane().add(scrollPane, BorderLayout.CENTER);
-//				frmAutomataEquivalente.setPreferredSize(new Dimension(500, 200));
+				JScrollPane js = new JScrollPane(table);
+				js.setVisible(true);
+				frmAutomataEquivalente.getContentPane().add(js);
 				
 				//Modifico nombres de las columnas
 				int val = 0;
@@ -252,7 +231,6 @@ public class MainWindow implements ActionListener {
 				}
 			}
 
-			frmAutomataEquivalente.pack();
 		} else {
 			String delims = "\\W+"; // split any non word
 			String[] tokensS = S.getText().split(delims);
@@ -288,10 +266,21 @@ public class MainWindow implements ActionListener {
 					}
 				}
 			}
-			
 			logicAutomata.setStates(sta);
-			logicAutomata.dfs();
+			logicAutomata.generateEquivalentMinimum();
+			
+			tablaResul = new JTable();
+			frmAutomataEquivalente.getContentPane().add(tablaResul, BorderLayout.SOUTH);
+			JScrollPane js = new JScrollPane(table);
+			js.setVisible(true);
+			frmAutomataEquivalente.getContentPane().add(js);
 		}
+		
+		frmAutomataEquivalente.pack();
+	}
+	
+	public void clearJtable() {
+		
 	}
 
 }

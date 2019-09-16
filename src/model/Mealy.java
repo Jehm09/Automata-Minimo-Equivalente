@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
@@ -8,10 +9,12 @@ import java.util.Vector;
 public class Mealy extends Automata {
 
 	private HashMap<String, HashMap<String, String[]>> adjw;// Conexiones (grafo)
+	private Vector<HashSet<String>> sets;// Vectors de hashset que representa la particion final
 
 	public Mealy(String S[], String R[], int Num_estados, String start) {
 		super(S, R, Num_estados, start);
 		adjw = new HashMap<>();
+		sets = new Vector<>();
 	}
 
 	/**
@@ -37,8 +40,6 @@ public class Mealy extends Automata {
 			visitados.put(states[i], false);
 		}
 
-		visitados.put(start, true);
-
 		Stack<String> stack = new Stack<>();
 		String s;
 		stack.add(start);
@@ -49,17 +50,17 @@ public class Mealy extends Automata {
 			if (!visitados.get(s)) {
 				visitados.put(s, true);
 			}
-			
+
 			for (Map.Entry<String, String[]> entry : adjw.get(s).entrySet()) {
 				String v = entry.getValue()[0];
 				if (!visitados.get(v))
 					stack.push(v);
 			}
-			
+
 		}
-		
+
 		for (int i = 0; i < Num_states; i++) {
-			if(!visitados.get(states[i])) {
+			if (!visitados.get(states[i])) {
 				adjw.remove(states[i]);
 			}
 		}
@@ -67,7 +68,78 @@ public class Mealy extends Automata {
 
 	@Override
 	public void generateEquivalentMinimum() {
+		dfs();
+		createFirstP();
 		
+		boolean st = true;
+
+		while (st) {
+			int tam = sets.size();
+			for (int s = 0; s < sets.size(); s++) {
+				check(s);
+			}
+			if (tam == sets.size()) {
+				st = false;
+			} else {
+				tam = sets.size();
+			}
+		}
+	}
+	
+	public void check(int s) {
+		int val = sets.size();
+		boolean create = false;
+		String anterior = "";
+
+		for (String strings : sets.get(s)) {
+			if (!anterior.isEmpty()) {
+				boolean exist = true;
+				for (HashSet<String> c : sets) {
+					for (int i = 0; i < S.length && exist; i++) {
+						if (!c.contains(adjw.get(anterior).get(S[i])[0]) && c.contains(adjw.get(strings).get(S[i])[0])) {
+							exist = false;
+						}
+						if (c.contains(adjw.get(anterior).get(S[i])[0]) && !c.contains(adjw.get(strings).get(S[i])[0])) {
+							exist = false;
+						}
+					}
+				}
+				if (!exist && !create) {
+					sets.add(new HashSet<>());
+					create = true;
+				}
+				if (!exist && create) {
+					sets.get(val).add(strings);
+					sets.get(s).remove(strings);
+				}
+			}
+			if (!create) {
+				anterior = strings;
+			}
+		}
+		if (create) {
+			check(val);
+		}
+	}
+
+	@Override
+	public void createFirstP() {
+		HashMap<String, HashSet<String>> map = new HashMap<>();
+
+		for (Map.Entry<String, HashMap<String, String[]>> entry : adjw.entrySet()) {
+			String keyString = "";
+			for (Map.Entry<String, String[]> entry2 : entry.getValue().entrySet()) {
+				keyString += entry2.getValue()[1] + " ";
+			}
+			keyString = keyString.trim();
+			HashSet<String> set = map.getOrDefault(keyString, new HashSet<>());
+			set.add(entry.getKey());
+			map.put(keyString, set);
+		}
+		
+		for (Map.Entry<String, HashSet<String>> entry : map.entrySet()) {
+			sets.add(entry.getValue());
+		}
 	}
 
 }

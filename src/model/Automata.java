@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Vector;
 
 public abstract class Automata {
 	
@@ -72,11 +75,11 @@ public abstract class Automata {
 	 */
 	public abstract void dfs();
 	
-//	public abstract 
-	
 	/**
 	 * Metodo que se encarga de generar el automata minimo equivalente
 	 */
 	public abstract void generateEquivalentMinimum();
+	
+	public abstract void createFirstP();
 
 }
