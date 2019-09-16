@@ -143,19 +143,9 @@ public class Moore extends Automata {
 	@Override
 	public String[] column() {
 		String rst[] = new String[S.length + 2];
-<<<<<<< HEAD
-
-		for (int i = 0; i < rst.length; i++) {
-			rst[i] = "";
-		}
-
-=======
 		
-		for (int i = 0; i < rst.length; i++) {
-			rst[i] = "";
-		}
+		Arrays.fill(rst, "");
 		
->>>>>>> e8a00bffb5cabbfb5bde755bd38dfbe9dbd5a181
 		for (int i = 1; i < S.length + 1; i++) {
 			rst[i] = S[i - 1];
 		}
@@ -166,7 +156,6 @@ public class Moore extends Automata {
 	@Override
 	public String[][] data() {
 		String rst[][] = new String[sets.size()][S.length + 2];
-<<<<<<< HEAD
 
 		for (int i = 0; i < rst.length; i++) {
 			Arrays.fill(rst[i], "");
@@ -174,44 +163,23 @@ public class Moore extends Automata {
 
 		HashMap<String, String> rename = new HashMap<>();
 
-=======
-		
 		for (int i = 0; i < rst.length; i++) {
 			for (int j = 0; j < rst[0].length; j++) {
 				rst[i][j] = "";
 			}
 		}
-		
-		HashMap<String, String> rename = new HashMap<>();
-		
->>>>>>> e8a00bffb5cabbfb5bde755bd38dfbe9dbd5a181
-		int conta = 0;
-		for (HashSet<String> s : sets) {
-			for (String st : s) {
-				rename.put(st, "P" + conta);
-			}
-			conta++;
-		}
 
 		for (int i = 0; i < rst.length; i++) {
 			rst[i][0] = "P" + (i);
 			String temp = "";
-<<<<<<< HEAD
 			for (int j = 1; j < rst[0].length - 1; j++) {
-=======
-			for (int j = 1; j < rst[0].length-1; j++) {
->>>>>>> e8a00bffb5cabbfb5bde755bd38dfbe9dbd5a181
 				for (String s : sets.get(i)) {
 					rst[i][j] = rename.get(adjw.get(s).get(S[j - 1]));
 					temp = s;
 					break;
 				}
 			}
-<<<<<<< HEAD
 			rst[i][S.length + 1] = salida.get(temp);
-=======
-			rst[i][S.length+1] = salida.get(temp);
->>>>>>> e8a00bffb5cabbfb5bde755bd38dfbe9dbd5a181
 		}
 
 		return rst;

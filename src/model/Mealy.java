@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -147,11 +148,9 @@ public class Mealy extends Automata {
 	@Override
 	public String[] column() {
 		String rst[] = new String[S.length + 1];
-		
-		for (int i = 0; i < rst.length; i++) {
-			rst[i] = "";
-		}
-		
+
+		Arrays.fill(rst, "");
+
 		for (int i = 1; i < S.length + 1; i++) {
 			rst[i] = S[i - 1];
 		}
@@ -163,13 +162,11 @@ public class Mealy extends Automata {
 	public String[][] data() {
 		String rst[][] = new String[sets.size()][S.length + 1];
 		HashMap<String, String> rename = new HashMap<>();
-		
+
 		for (int i = 0; i < rst.length; i++) {
-			for (int j = 0; j < rst[0].length; j++) {
-				rst[i][j] = "";
-			}
+			Arrays.fill(rst[i], "");
 		}
-		
+
 		int conta = 0;
 		for (HashSet<String> s : sets) {
 			for (String st : s) {
@@ -177,7 +174,6 @@ public class Mealy extends Automata {
 			}
 			conta++;
 		}
-		
 
 		for (int i = 0; i < rst.length; i++) {
 			rst[i][0] = "P" + (i);

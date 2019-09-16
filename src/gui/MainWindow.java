@@ -261,7 +261,6 @@ public class MainWindow implements ActionListener {
 			JScrollPane js = new JScrollPane(tablaResul);
 			js.setVisible(true);
 			frame.getContentPane().add(js);
-
 		}
 
 		frame.pack();
