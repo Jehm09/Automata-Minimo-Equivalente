@@ -9,8 +9,9 @@ public class Mealy extends Automata {
 
 	private HashMap<String, HashMap<String, String[]>> adjw;// Conexiones (grafo)
 
-	public Mealy(Vector<String> S, Vector<String> R, int Num_estados, String start) {
+	public Mealy(String S[], String R[], int Num_estados, String start) {
 		super(S, R, Num_estados, start);
+		adjw = new HashMap<>();
 	}
 
 	/**

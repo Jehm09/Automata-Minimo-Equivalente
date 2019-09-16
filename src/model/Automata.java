@@ -1,17 +1,16 @@
 package model;
 
-import java.util.Vector;
 
 public abstract class Automata {
 	
 	protected int Num_states;
 	protected String start;//Representa el estado inicial
-	protected Vector<String> S;//Alfabeto
-	protected Vector<String> R;//Alfabeto de salida
+	protected String S[];//Alfabeto
+	protected String R[];//Alfabeto de salida
 	protected String states[];
 	
 
-	public Automata(Vector<String> S, Vector<String> R, int Num_states, String start) {
+	public Automata(String S[], String R[], int Num_states, String start) {
 		this.S = S;
 		this.R = R;
 		this.Num_states = Num_states;
@@ -19,36 +18,44 @@ public abstract class Automata {
 		states = new String[Num_states];
 	}
 	
-	public String getStartString() {
-		return start;
-	}
-	
-	public void setStartString(String start) {
-		this.start = start;
-	}
-	
-	public int getEstados() {
+	public int getNum_states() {
 		return Num_states;
 	}
 
-	public void setEstados(int Num_states) {
-		this.Num_states = Num_states;
+	public void setNum_states(int num_states) {
+		Num_states = num_states;
 	}
 
-	public Vector<String> getS() {
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String[] getS() {
 		return S;
 	}
 
-	public void setS(Vector<String> s) {
+	public void setS(String[] s) {
 		S = s;
 	}
 
-	public Vector<String> getR() {
+	public String[] getR() {
 		return R;
 	}
 
-	public void setR(Vector<String> r) {
+	public void setR(String[] r) {
 		R = r;
+	}
+
+	public String[] getStates() {
+		return states;
+	}
+
+	public void setStates(String[] states) {
+		this.states = states;
 	}
 	
 	/**
@@ -64,6 +71,8 @@ public abstract class Automata {
 	 * Metodo que se encarga de recorrer el grafo y eliminar los estados que no son alcanzables
 	 */
 	public abstract void dfs();
+	
+//	public abstract 
 	
 	/**
 	 * Metodo que se encarga de generar el automata minimo equivalente

@@ -10,8 +10,10 @@ public class Moore extends Automata{
 	private HashMap<String, HashMap<String, String>> adjw;//Conexiones (grafo)
 	private HashMap<String, String> salida;//Salida de cada estado
 	
-	public Moore(Vector<String> S, Vector<String> R, int Num_estados, String start) {
+	public Moore(String S[], String R[], int Num_estados, String start) {
 		super(S, R, Num_estados, start);
+		adjw = new HashMap<>();
+		salida = new HashMap<>();
 	}
 	
 	/**
@@ -35,8 +37,6 @@ public class Moore extends Automata{
 		for (int i = 0; i < Num_states; i++) {
 			visitados.put(states[i], false);
 		}
-
-		visitados.put(start, true);
 
 		Stack<String> stack = new Stack<>();
 		String s;
@@ -66,7 +66,6 @@ public class Moore extends Automata{
 
 	@Override
 	public void generateEquivalentMinimum() {
-		// TODO Auto-generated method stub
 		
 	}
 }
