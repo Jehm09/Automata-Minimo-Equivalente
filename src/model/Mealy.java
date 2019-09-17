@@ -3,6 +3,7 @@ package model;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
@@ -91,6 +92,7 @@ public class Mealy extends Automata {
 		int val = sets.size();
 		boolean create = false;
 		String anterior = "";
+		LinkedList<String> queue = new LinkedList<>();
 
 		for (String strings : sets.get(s)) {
 			if (!anterior.isEmpty()) {
@@ -113,7 +115,8 @@ public class Mealy extends Automata {
 				}
 				if (!exist && create) {
 					sets.get(val).add(strings);
-					sets.get(s).remove(strings);
+					queue.offer(strings);
+//					sets.get(s).remove(strings);
 				}
 			}
 			if (!create) {
@@ -121,6 +124,9 @@ public class Mealy extends Automata {
 			}
 		}
 		if (create) {
+			while (!queue.isEmpty()) {
+				sets.get(s).remove(queue.poll());
+			}
 			check(val);
 		}
 	}

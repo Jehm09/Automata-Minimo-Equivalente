@@ -95,6 +95,7 @@ public class Moore extends Automata {
 		int val = sets.size();
 		boolean create = false;
 		String anterior = "";
+		LinkedList<String> queue = new LinkedList<>();
 
 		for (String strings : sets.get(s)) {
 			if (!anterior.isEmpty()) {
@@ -115,7 +116,8 @@ public class Moore extends Automata {
 				}
 				if (!exist && create) {
 					sets.get(val).add(strings);
-					sets.get(s).remove(strings);
+					queue.offer(strings);
+//					sets.get(s).remove(strings);
 				}
 			}
 			if (!create) {
@@ -123,6 +125,9 @@ public class Moore extends Automata {
 			}
 		}
 		if (create) {
+			while (!queue.isEmpty()) {
+				sets.get(s).remove(queue.poll());
+			}
 			check(val);
 		}
 	}
@@ -163,12 +168,14 @@ public class Moore extends Automata {
 
 		HashMap<String, String> rename = new HashMap<>();
 
-		for (int i = 0; i < rst.length; i++) {
-			for (int j = 0; j < rst[0].length; j++) {
-				rst[i][j] = "";
+		int conta = 0;
+		for (HashSet<String> s : sets) {
+			for (String st : s) {
+				rename.put(st, "P" + conta);
 			}
+			conta++;
 		}
-
+		
 		for (int i = 0; i < rst.length; i++) {
 			rst[i][0] = "P" + (i);
 			String temp = "";
