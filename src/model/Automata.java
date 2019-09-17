@@ -1,9 +1,5 @@
 package model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Vector;
-
 public abstract class Automata {
 	
 	protected int Num_states;
